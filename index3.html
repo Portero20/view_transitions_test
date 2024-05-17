@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Transitions</title>
+
+    <style>
+        body {
+            font-family: system-ui;
+        }
+
+        .content {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="content">
+
+            <img src="./img/bojack_horseman1.jpg" alt="" width="300" data-name="bojack1"
+                style="view-transition-name: bojack1">
+            <img src="./img/bojack_horseman2.jpg" alt="" width="300" data-name="bojack2"
+                style="view-transition-name: bojack2">
+            <img src="./img/bojack_horseman3.webp" alt="" width="300" data-name="bojack3"
+                style="view-transition-name: bojack3">
+
+        </div>
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('img')
+
+        images.forEach((image) => {
+
+            image.addEventListener("click", (e) => {
+
+                if (!document.startViewTransition) {
+                    updateDOM(e.target)
+                    return;
+                }
+
+                document.startViewTransition(() => updateDOM(e.target))
+
+            })
+
+        })
+
+        function updateDOM(target) {
+
+            const src = target.getAttribute("src")
+            const transitionName = target.getAttribute("data-name")
+
+            document.querySelector(".content").innerHTML =
+                `<img src="${src}" width=800 style="view-transition-name: ${transitionName}">`
+
+        }
+    </script>
+
+</body>
+
+</html>
